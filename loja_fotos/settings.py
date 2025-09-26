@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import environ
 
+# reading .env file
+environ.Env.read_env(BASE_DIR / '.env')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,8 +23,6 @@ env = environ.Env(
     # set casting, default value
     DEBUG=(bool, True)
 )
-# reading .env file
-environ.Env.read_env(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
@@ -148,6 +148,9 @@ if not DEBUG:
     SECURE_HSTS_PRELOAD = env.bool('SECURE_HSTS_PRELOAD', default=False)
     SECURE_REFERRER_POLICY = 'same-origin'
     STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
         "staticfiles": {
             "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
         },
